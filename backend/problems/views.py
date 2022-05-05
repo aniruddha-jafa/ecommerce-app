@@ -1,3 +1,11 @@
-from django.shortcuts import render
+from rest_framework import generics 
+from .models import Problem
+from .serializers import ProblemSerializer
 
-# Create your views here.
+class ProblemList(generics.ListCreateAPIView):
+    queryset = Problem.objects.all()
+    serializer_class = ProblemSerializer
+
+class ProblemDetail(generics.RetrieveUpdateDestroyAPIView): 
+    queryset = Problem.objects.all()
+    serializer_class = ProblemSerializer
