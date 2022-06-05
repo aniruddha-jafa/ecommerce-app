@@ -8,34 +8,12 @@ import {
 } from '@chakra-ui/react'
 
 import { useFormik } from 'formik'
-import { z } from 'zod'
+
+import { LoginFormSchema, initialValues } from './schema'
 
 // ----------------------------------------------------------------
 
-const EMAIL_MIN = 2
-const EMAIL_MAX = 250
-const PASSWORD_MIN = 8
-const PASSWORD_MAX = 200
-
-const LoginFormSchema = z.object({
-  email: z
-    .string()
-    .min(EMAIL_MIN, `Email is too short`)
-    .max(EMAIL_MAX, `Email must not exceed ${EMAIL_MAX} characters`)
-    .email('Please enter a valid email'),
-  password: z
-    .string()
-    .min(PASSWORD_MIN, 'Password is too short')
-    .max(PASSWORD_MAX, 'Password is too long'),
-})
-
-type LoginForm = z.infer<typeof LoginFormSchema>
-
-const initialValues: LoginForm = {
-  email: '',
-  password: '',
-}
-
+/**@todo */
 const onSubmit = (values: object) => {
   alert(JSON.stringify(values))
 }
@@ -43,7 +21,7 @@ const onSubmit = (values: object) => {
 function validate(values: unknown) {
   const result = LoginFormSchema.safeParse(values)
   if (!result.success) {
-    return result.error.flatten().fieldErrors
+    return result.error.flatten().fieldErrors // return error messages
   }
   return {}
 }
