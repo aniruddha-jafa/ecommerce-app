@@ -1,0 +1,10 @@
+version: '3.8' 
+
+services:
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - 5050:5050
+    volumes:
+      - ./backend/src:/code/src
