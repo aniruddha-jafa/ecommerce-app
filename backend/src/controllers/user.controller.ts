@@ -1,8 +1,9 @@
 import assert from 'assert'
-import { PrismaClient } from '@prisma/client'
 import pino from 'pino'
 import pinoHttp from 'pino-http'
 import isUUID from 'is-uuid'
+
+import prismaClient from '../models/prismaClientInstance'
 
 import type { User } from '@prisma/client'
 import type { RequestHandler, Request, Response, NextFunction } from 'express'
@@ -16,13 +17,13 @@ interface RequestWithId extends Request {
   userId?: User['id']
 }
 
-const db = new PrismaClient()
+const db = prismaClient.user
 
 const list: RequestHandler = async (req, res) => {
   try {
     log.info('Trying to list many users..')
 
-    const users = await db.user.findMany({
+    const users = await db.findMany({
       where: {
         status: 'ACTIVE',
       },
@@ -79,7 +80,7 @@ const create: RequestHandler = async (req, res) => {
   try {
     log.info('Trying to create user..')
     // log.debug('Request body is: %o', req.body)
-    await db.user.create({ data: req.body })
+    await db.create({ data: req.body })
     res.status(200).json({ message: 'User created successfully' })
 
     log.info('Success')
@@ -96,7 +97,7 @@ const read = async (req: RequestWithId, res: Response) => {
     const id = req.userId
     log.info('Trying to read user ' + id)
 
-    const user = await db.user.findUnique({
+    const user = await db.findUnique({
       where: {
         id,
       },
@@ -124,7 +125,7 @@ const update = async (req: RequestWithId, res: Response) => {
     const id = req.userId
     log.info('Trying to update user ' + req.userId)
     log.info('data: %o', req.body)
-    const user = await db.user.update({
+    const user = await db.update({
       where: { id },
       data: req.body,
       select: {
@@ -151,7 +152,7 @@ const remove = async (req: RequestWithId, res: Response) => {
     const id = req.userId
     log.info('Trying to delete user ' + id)
 
-    const user = await db.user.delete({
+    const user = await db.delete({
       where: { id },
       select: {
         id: true,
