@@ -2,6 +2,7 @@ import assert from 'assert'
 import { PrismaClient } from '@prisma/client'
 import pino from 'pino'
 import pinoHttp from 'pino-http'
+import isUUID from 'is-uuid'
 
 import type { User } from '@prisma/client'
 import type { RequestHandler, Request, Response, NextFunction } from 'express'
@@ -60,6 +61,7 @@ const userIdValidator = async (
   try {
     assert(id, 'id is required')
     assert(typeof id === 'string')
+    assert(isUUID.anyNonNil(id), 'id must be a valid uuid')
     ;(req as RequestWithId).userId = id
 
     log.info('Success')
