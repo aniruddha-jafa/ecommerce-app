@@ -9,7 +9,8 @@
     "build": "tsc",
     "start": "node dist/index.js",
     "dev": "concurrently \"npm:build:dev\" \"npm:start:dev\" ",
-    "test": "jest --watch"
+    "test": "jest --watch",
+    "create-schemas": "npx prisma generate"
   },
   "prisma": {
     "schema": "src/models/prisma/schema.prisma"
@@ -23,7 +24,8 @@
     "nodemon": "^2.0.16",
     "pino": "^8.0.0",
     "pino-http": "^7.1.0",
-    "zod": "^3.17.3"
+    "zod": "^3.17.3",
+    "zod-prisma": "^0.5.4"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",

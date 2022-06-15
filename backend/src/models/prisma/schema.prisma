@@ -5,6 +5,11 @@ generator client {
   provider = "prisma-client-js"
 }
 
+generator zod {
+  provider = "zod-prisma"
+  output = "../schemas"
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -20,10 +25,10 @@ enum AccountStatus {
 }
 
 model User {
-  id   String @id @default(uuid())
-  email String @unique
-  name String 
-  hashedPassword String
+  id   String @id @default(uuid()) /// @zod.uuid()
+  email String @unique  ///@zod.max(200, { message: "Email must not exceed 200 characters"})
+  name String ///@zod.max(200, { message: "Name must not exceed 200 characters"})
+  hashedPassword String ///@zod.max(100, { message: "hashedPassword must not exceed 100 characters" })
   salt String 
   status AccountStatus @default(ACTIVE)
   isSeller Boolean @default(false)
