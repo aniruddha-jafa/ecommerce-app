@@ -30,6 +30,7 @@ model User {
   name String? ///@zod.max(200, { message: "Name must not exceed 200 characters"})
   hashedPassword String ///@zod.max(100, { message: "hashedPassword must not exceed 100 characters" })
   status AccountStatus @default(ACTIVE)
+  isAdmin Boolean @default(false)
   isSeller Boolean @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

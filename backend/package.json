@@ -11,7 +11,8 @@
     "dev": "concurrently \"npm:build:dev\" \"npm:start:dev\" ",
     "test": "jest --watch --detectOpenHandles",
     "test:clear-cache": "npm test  -- --clearCache",
-    "create-schemas": "npx prisma generate"
+    "db:migrate": "npx prisma migrate dev",
+    "db:schemas": "npx prisma generate"
   },
   "prisma": {
     "schema": "src/models/prisma/schema.prisma"
