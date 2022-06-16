@@ -2,8 +2,13 @@ import assert from 'assert'
 import pino from 'pino'
 import pinoHttp from 'pino-http'
 import isUUID from 'is-uuid'
+import { z } from 'zod'
+import { Prisma } from '@prisma/client'
 
 import prismaClient from '../models/prismaClientInstance'
+import auth from '../lib/auth/index'
+
+import { UserModel } from '../models/schemas'
 
 import type { User } from '@prisma/client'
 import type { RequestHandler, Request, Response, NextFunction } from 'express'
@@ -16,6 +21,14 @@ const httpLog = pinoHttp({ name: 'user.controler.http' }).logger
 interface RequestWithId extends Request {
   userId?: User['id']
 }
+
+// const Password = z.object({ password: z.string() })
+
+const UserCreateSchema = z.object({
+  email: z.string().email().min(3).max(250),
+  password: z.string(),
+})
+const UserUpdateSchema = UserModel.optional()
 
 const db = prismaClient.user
 
@@ -78,17 +91,39 @@ const userIdValidator = async (
 // create
 const create: RequestHandler = async (req, res) => {
   try {
-    log.info('Trying to create user..')
-    // log.debug('Request body is: %o', req.body)
-    await db.create({ data: req.body })
+    log.info('Trying to create a user')
+    log.debug('Request body is: %o', req.body)
+
+    const result = await UserCreateSchema.safeParseAsync(req.body)
+    if (!result.success) {
+      log.error('Unable to parse as user')
+      const { message } = result.error.issues[0]
+      throw new Error(message)
+    }
+
+    const data = { ...req.body }
+    const password = req.body.password
+    data.hashedPassword = await auth.createHashedPassword(password)
+    // log.debug('generated hashedPassword: %s', data.hashedPassword)
+
+    delete data['password']
+
+    await db.create({ data })
     res.status(200).json({ message: 'User created successfully' })
 
     log.info('Success')
   } catch (err: any) {
-    log.error(err?.message)
-    httpLog.error(req.body)
+    log.error('Error: %o', err)
 
-    res.status(500).json({ error: 'Unable to create user' })
+    let message = 'Unable to create user'
+    if (err instanceof Prisma.PrismaClientKnownRequestError) {
+      const { code } = err
+      if (code === 'P2002') {
+        message = 'Email is already in use'
+      }
+    }
+
+    res.status(500).json({ error: message })
   }
 }
 

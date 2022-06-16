@@ -20,3 +20,14 @@ it('can list users', async () => {
   expect(res.body).toBeDefined()
   expect(Array.isArray(res.body)).toBe(true)
 })
+
+/**@todo */
+// it('can create user', async () => {
+//   const testUser = {
+//     email: 'test.user@12345.com',
+//     password: '20cnO&9cbK',
+//   }
+//   const res = await agent.post('/api/users').send(testUser)
+//   console.debug('Response BODY: ', res.body)
+//   expect(res.status).toBe(200)
+// })
