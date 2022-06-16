@@ -1,7 +1,8 @@
-import Footer from 'components/Footer/index'
-import Navbar from 'components/Navbar/index'
+import BaseLayout from 'layouts/BaseLayout'
 
 import type { NextPage } from 'next'
+
+// ----------------------------------------------------------------
 
 /**
  * For layout see:
@@ -10,18 +11,9 @@ import type { NextPage } from 'next'
 const Home: NextPage = () => {
   return (
     <>
-      <div
-        className='
-      min-h-screen 
-      grid grid-rows-[auto_1fr_auto]
-      '
-      >
-        <Navbar />
-        <div>
-          <p>body</p>
-        </div>
-        <Footer />
-      </div>
+      <BaseLayout>
+        <p>Home...</p>
+      </BaseLayout>
     </>
   )
 }
