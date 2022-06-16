@@ -82,30 +82,34 @@ const userIdValidator = async (
 const create: RequestHandler = async (req, res) => {
   try {
     log.info('Trying to create a user')
-    log.debug('Request body is: %o', req.body)
 
-    const result = await UserCreateSchema.safeParseAsync(req.body)
+    const { body } = req
+    log.info('Request body is: %o', body)
+
+    const result = await UserCreateSchema.safeParseAsync(body)
+
     if (!result.success) {
-      log.error('Unable to parse as user')
-      const { message } = result.error.issues[0]
-      throw new Error(message)
+      log.error('Unable to parse as user: %o', result.error)
+      const { path, message } = result.error.issues[0]
+      throw new Error(`${path} - ${message}`)
     }
 
-    const data = { ...req.body }
-    const password = req.body.password
+    const data = { ...body }
+    const { password } = body
     data.hashedPassword = await auth.createHashedPassword(password)
-    // log.debug('generated hashedPassword: %s', data.hashedPassword)
+    log.debug('generated hashedPassword: %s', data.hashedPassword)
 
+    /** password should NOT be persisted! */
     delete data['password']
 
     await db.create({ data })
-    res.status(200).json({ message: 'User created successfully' })
 
+    res.status(200).json({ message: 'User created successfully' })
     log.info('Success')
   } catch (err: any) {
     log.error('Error: %o', err)
 
-    let message = 'Unable to create user'
+    let message = err?.message || 'Unable to create user'
     if (err instanceof Prisma.PrismaClientKnownRequestError) {
       const { code } = err
       if (code === 'P2002') {
@@ -147,12 +151,21 @@ const read = async (req: RequestWithId, res: Response) => {
 
 const update = async (req: RequestWithId, res: Response) => {
   try {
-    const id = req.userId
-    log.info('Trying to update user ' + req.userId)
-    log.info('data: %o', req.body)
+    const { userId, body } = req
+    log.info('Trying to update user ' + userId)
+    log.info('data: %o', body)
+
+    const data = { ...body, id: userId }
+
+    const result = await UserUpdateSchema.safeParseAsync(data)
+    if (!result.success) {
+      const { path, message } = result.error.issues[0]
+      throw new Error(`${path} - ${message}`)
+    }
+
     const user = await db.update({
-      where: { id },
-      data: req.body,
+      where: { id: userId },
+      data,
       select: {
         id: true,
         email: true,
@@ -165,10 +178,12 @@ const update = async (req: RequestWithId, res: Response) => {
 
     log.info('Success')
   } catch (err: any) {
-    log.error(err?.message)
+    log.error(err)
     httpLog.error(req)
 
-    res.status(500).json({ error: 'Unable to update user' })
+    let message = err?.message || 'Unable to update user'
+
+    res.status(500).json({ error: message })
   }
 }
 
