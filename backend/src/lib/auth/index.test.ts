@@ -1,4 +1,4 @@
-import * as auth from './index'
+import auth from './index'
 
 const invalid = ['hello-world', '', 29362, 'abc@123', 'abcdef12345']
 
@@ -11,11 +11,8 @@ const valid = ['P7Ca-l3cI-ay13', 'Twoc7*#xnaocu89']
 
 it.each(valid)('Password "%s" is valid', async (password: string) => {
   const result = await auth.isValidPassword(password)
-  //   expect(result).toBeFalsy()
-  console.log(result)
   expect(result.success).toBe(true)
 })
-
 
 it('Can authenticate a password', async () => {
   const plaintext = 'P7Ca-l3cI-ay13'

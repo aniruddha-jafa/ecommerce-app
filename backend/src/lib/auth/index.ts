@@ -55,4 +55,4 @@ const createHashedPassword = async (plaintext: string) => {
   }
 }
 
-export { isValidPassword, createHashedPassword, authenticate }
+export default { isValidPassword, createHashedPassword, authenticate }
