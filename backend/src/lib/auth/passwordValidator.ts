@@ -14,16 +14,23 @@ const regexSpecial = /[^\W-]/g
 
 const passwordValidator = z
   .string()
-  .min(PasswordSchema.min)
-  .max(PasswordSchema.max)
+  .min(
+    PasswordSchema.min,
+    `Password must have at least ${PasswordSchema.min} characters`
+  )
+  .max(
+    PasswordSchema.max,
+    `Password length must not exceed ${PasswordSchema.min} characters`
+  )
   .refine(
     (s) => {
       const matches = s.match(regexUpper)
       return matches && matches.length >= PasswordSchema.minUpper
     },
     {
-      message:
-        'Must have at least ' + PasswordSchema.minUpper + ' uppercase letters',
+      message: `Password must have at least ${
+        PasswordSchema.minUpper
+      } uppercase ${PasswordSchema.minUpper > 1 ? 'letters' : 'letter'}`,
     }
   )
   .refine(
@@ -31,7 +38,11 @@ const passwordValidator = z
       const matches = s.match(regexDigits)
       return matches && matches?.length >= PasswordSchema.minDigits
     },
-    { message: 'Must have at least ' + PasswordSchema.minDigits + ' numbers' }
+    {
+      message: `Password must have at least  ${PasswordSchema.minDigits} ${
+        PasswordSchema.minDigits > 1 ? 'digits' : 'digit'
+      }`,
+    }
   )
   .refine(
     (s) => {
@@ -39,10 +50,9 @@ const passwordValidator = z
       return matches && matches.length >= PasswordSchema.minSpecial
     },
     {
-      message:
-        'Must have at least ' +
-        PasswordSchema.minSpecial +
-        ' special characters',
+      message: `Passwordmust have at least ${
+        PasswordSchema.minSpecial
+      } special ${PasswordSchema.minSpecial > 1 ? 'characters' : 'character'}`,
     }
   )
 
