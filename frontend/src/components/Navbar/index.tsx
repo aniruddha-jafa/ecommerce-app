@@ -7,10 +7,10 @@ export default function Main() {
       <Box
         as='nav'
         className='navbar'
-        color='teal'
+        color='primary.main'
         border='solid 1px'
         borderRadius='lg'
-        borderColor='teal'
+        borderColor='primary.main'
         px={8}
         m={1}
       >
@@ -47,7 +47,7 @@ export default function Main() {
                 <span className='text-info'>Subtotal: $999</span>
                 <div className='card-actions'>
                   <Button
-                    bgColor='teal'
+                    colorScheme='teal'
                     border='none'
                     className='btn btn-block'
                   >
@@ -68,10 +68,7 @@ export default function Main() {
               className='menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52'
             >
               <li>
-                <a className='justify-between'>
-                  Profile
-                  <span className='badge'>New</span>
-                </a>
+                <a className='justify-between'>Profile</a>
               </li>
               <li>
                 <a>Settings</a>
