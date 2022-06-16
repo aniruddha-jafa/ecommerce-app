@@ -12,7 +12,7 @@ const regexUpper = /[A-Z]/g
 const regexDigits = /\d/g
 const regexSpecial = /[^\W-]/g
 
-const passwordValidator = z
+const validatePassword = z
   .string()
   .min(
     PasswordSchema.min,
@@ -56,4 +56,4 @@ const passwordValidator = z
     }
   )
 
-export default passwordValidator
+export default validatePassword

@@ -1,8 +1,7 @@
 import bcrypt from 'bcrypt'
 import pino from 'pino'
 
-// import { PrismaClient } from '@prisma/client'
-import passwordValidator from '../../lib/auth/passwordValidator'
+import validatePassword from './validatePassword'
 
 // ----------------------------------------------------------------
 
@@ -17,7 +16,7 @@ const DEFAULT_SALT_ROUNDS = 10
  */
 const isValidPassword = async (plaintext: string) => {
   // throws on validation error
-  const result = await passwordValidator.safeParseAsync(plaintext)
+  const result = await validatePassword.safeParseAsync(plaintext)
   return result
 }
 
