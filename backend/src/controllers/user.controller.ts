@@ -2,13 +2,11 @@ import assert from 'assert'
 import pino from 'pino'
 import pinoHttp from 'pino-http'
 import isUUID from 'is-uuid'
-import { z } from 'zod'
 import { Prisma } from '@prisma/client'
 
 import prismaClient from '../models/prismaClientInstance'
 import auth from '../lib/auth/index'
-
-import { UserModel } from '../models/schemas'
+import { UserCreateSchema, UserUpdateSchema } from '../models/schemas/user.api'
 
 import type { User } from '@prisma/client'
 import type { RequestHandler, Request, Response, NextFunction } from 'express'
@@ -21,14 +19,6 @@ const httpLog = pinoHttp({ name: 'user.controler.http' }).logger
 interface RequestWithId extends Request {
   userId?: User['id']
 }
-
-// const Password = z.object({ password: z.string() })
-
-const UserCreateSchema = z.object({
-  email: z.string().email().min(3).max(250),
-  password: z.string(),
-})
-const UserUpdateSchema = UserModel.optional()
 
 const db = prismaClient.user
 
