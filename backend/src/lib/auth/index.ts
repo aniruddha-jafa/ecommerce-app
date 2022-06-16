@@ -45,13 +45,14 @@ const createHashedPassword = async (plaintext: string) => {
   try {
     const result = await isValidPassword(plaintext)
     if (!result.success) {
-      throw new Error(result.error.message)
+      const { message } = result.error.issues[0]
+      throw new Error(message)
     }
     const hashedPassword = await encrypt(plaintext, DEFAULT_SALT_ROUNDS)
     return hashedPassword
   } catch (err: any) {
     log.error(err?.message)
-    return ''
+    throw new Error(err?.message || 'Password is invalid')
   }
 }
 
