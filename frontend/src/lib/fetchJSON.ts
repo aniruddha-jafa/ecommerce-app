@@ -1,14 +1,11 @@
 async function fetchJSONData(url: string) {
   try {
-    const data = await fetch(url)
-    const body = await data.json()
-    return { error: false, data: body }
-  } catch (err) {
+    const res = await fetch(url)
+    const data = await res.json()
+    return { error: false, data }
+  } catch (err: any) {
     console.error(err)
-    let message = `Unable to fetch at ${url}`
-    if (err instanceof Error) {
-        message = err.message
-    }
+    const message = err?.message || `Unable to fetch ${url}`
     return { error: true, data: message }
   }
 }
