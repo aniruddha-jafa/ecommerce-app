@@ -1,6 +1,7 @@
 lockfileVersion: 5.3
 
 specifiers:
+  '@chakra-ui/icons': ^2.0.2
   '@chakra-ui/react': ^2.1.2
   '@emotion/react': ^11
   '@emotion/styled': ^11
@@ -16,7 +17,6 @@ specifiers:
   framer-motion: ^6
   husky: ^7.0.4
   immer: ^9.0.14
-  is-email: ^1.0.2
   lint-staged: ^12.4.1
   next: 12.1.6
   postcss: ^8.4.13
@@ -24,25 +24,23 @@ specifiers:
   react: 18.1.0
   react-dom: 18.1.0
   react-final-form: ^6.5.9
-  superstruct: ^0.15.4
   tailwindcss: ^3.0.24
   typescript: 4.7.2
   use-immer: ^0.7.0
   zod: ^3.17.3
 
 dependencies:
+  '@chakra-ui/icons': 2.0.2_react@18.1.0
   '@chakra-ui/react': 2.1.2_956820cce9301ef9ae5be158d738e7d7
   '@emotion/react': 11.9.0_@types+react@18.0.8+react@18.1.0
   '@emotion/styled': 11.8.1_c518d5881adeea60a6659db82ca94b80
   final-form: 4.20.7
   framer-motion: 6.3.10_react-dom@18.1.0+react@18.1.0
   immer: 9.0.14
-  is-email: 1.0.2
   next: 12.1.6_react-dom@18.1.0+react@18.1.0
   react: 18.1.0
   react-dom: 18.1.0_react@18.1.0
   react-final-form: 6.5.9_final-form@4.20.7+react@18.1.0
-  superstruct: 0.15.4
   use-immer: 0.7.0_immer@9.0.14+react@18.1.0
   zod: 3.17.3
 
@@ -356,6 +354,27 @@ packages:
     dependencies:
       '@chakra-ui/system': 2.1.1_9f23f4097fbec8b91de0b8b9767d3123
       '@chakra-ui/utils': 2.0.1
+      react: 18.1.0
+    dev: false
+
+  /@chakra-ui/icon/3.0.2_react@18.1.0:
+    resolution: {integrity: sha512-sas37byldn5O/TTIKHzxHBujEYqVPXegisoMqutLtF60fpXnb62aG1JTyorXSG3zJxJWQW7+AvjbOGyWKHXc0Q==}
+    peerDependencies:
+      '@chakra-ui/system': '>=2.0.0-next.0'
+      react: '>=18'
+    dependencies:
+      '@chakra-ui/utils': 2.0.2
+      react: 18.1.0
+    dev: false
+
+  /@chakra-ui/icons/2.0.2_react@18.1.0:
+    resolution: {integrity: sha512-UY7vP8E5pv2a4sd1SiezgVbmq1/tRfnehk6PatunrTvGMxQNhSKJJoiRI/wCtUfMoMz+yp9+ekc1ksJVCnokRg==}
+    peerDependencies:
+      '@chakra-ui/system': '>=2.0.0-next.0'
+      react: '>=18'
+    dependencies:
+      '@chakra-ui/icon': 3.0.2_react@18.1.0
+      '@types/react': 18.0.8
       react: 18.1.0
     dev: false
 
@@ -904,6 +923,15 @@ packages:
       lodash.mergewith: 4.6.2
     dev: false
 
+  /@chakra-ui/utils/2.0.2:
+    resolution: {integrity: sha512-9AC/ir9zm0shgFG7kdzOKUH2Wx5VB71M3uRMEsMZf75YlhhiU7AvBNtWXnJu+CBiTi41rKa5A+2ImMOsuPfGbA==}
+    dependencies:
+      '@types/lodash.mergewith': 4.6.6
+      css-box-model: 1.2.1
+      framesync: 5.3.0
+      lodash.mergewith: 4.6.2
+    dev: false
+
   /@chakra-ui/visually-hidden/2.0.1_354f81d2ea3fd6011d5690b064051a0c:
     resolution: {integrity: sha512-++NVj6mt110Zw+RtMr/cZLwK92WS5shL9kgGdtaXiIu6jTtcGMmKzq8YhBUY3Jb0BF3qgqSV36/JdIOrFETAKA==}
     peerDependencies:
@@ -1238,7 +1266,6 @@ packages:
 
   /@types/prop-types/15.7.5:
     resolution: {integrity: sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==}
-    dev: true
 
   /@types/react-dom/18.0.3:
     resolution: {integrity: sha512-1RRW9kst+67gveJRYPxGmVy8eVJ05O43hg77G2j5m76/RFJtMbcfAs2viQ2UNsvvDg8F7OfQZx8qQcl6ymygaQ==}
@@ -1252,11 +1279,9 @@ packages:
       '@types/prop-types': 15.7.5
       '@types/scheduler': 0.16.2
       csstype: 3.1.0
-    dev: true
 
   /@types/scheduler/0.16.2:
     resolution: {integrity: sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==}
-    dev: true
 
   /@typescript-eslint/parser/5.27.0_eslint@8.14.0+typescript@4.7.2:
     resolution: {integrity: sha512-8oGjQF46c52l7fMiPPvX4It3u3V3JipssqDfHQ2hcR0AeR8Zge+OYyKUCm5b70X72N1qXt0qgHenwN6Gc2SXZA==}
@@ -2586,10 +2611,6 @@ packages:
       has-tostringtag: 1.0.0
     dev: true
 
-  /is-email/1.0.2:
-    resolution: {integrity: sha512-UojUgD2EhDTBQ2SGKwrK9edce5phRzgLsP+V5+Uu2Swi+uvjVXgH3zduM3HhT9iaC/9Kq19/TYUbP0jPoi6ioA==}
-    dev: false
-
   /is-extglob/2.1.1:
     resolution: {integrity: sha512-SbKbANkN603Vi4jEZv49LeVJMn4yGwsbzZworEoyEiutsN3nJYdbO36zfhGJ6QEDpOZIFkDtnq5JRxmvl3jsoQ==}
     engines: {node: '>=0.10.0'}
@@ -3599,10 +3620,6 @@ packages:
 
   /stylis/4.0.13:
     resolution: {integrity: sha512-xGPXiFVl4YED9Jh7Euv2V220mriG9u4B2TA6Ybjc1catrstKD2PpIdU3U0RKpkVBC2EhmL/F0sPCr9vrFTNRag==}
-    dev: false
-
-  /superstruct/0.15.4:
-    resolution: {integrity: sha512-eOoMeSbP9ZJChNOm/9RYjE+F36rYR966AAqeG3xhQB02j2sfAUXDp4EQ/7bAOqnlJnuFDB8yvOu50SocvKpUEw==}
     dev: false
 
   /supports-color/5.5.0:
