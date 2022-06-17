@@ -124,7 +124,7 @@ const create: RequestHandler = async (req, res) => {
 const read = async (req: RequestWithId, res: Response) => {
   try {
     const id = req.userId
-    log.info('Trying to read user ' + id)
+    log.info('Trying to read user %s', id)
 
     const user = await db.findUnique({
       where: {
@@ -133,7 +133,10 @@ const read = async (req: RequestWithId, res: Response) => {
       select: {
         name: true,
         email: true,
-        updatedAt: true,
+        createdAt: true,
+        status: true,
+        isSeller: true,
+        isAdmin: true,
       },
     })
     res.json(user)
