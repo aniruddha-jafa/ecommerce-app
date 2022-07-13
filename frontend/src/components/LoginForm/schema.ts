@@ -8,9 +8,10 @@ const PASSWORD_MAX = 200
 const LoginFormSchema = z.object({
   email: z
     .string()
+    .trim()
     .max(EMAIL_MAX, `Email must not exceed ${EMAIL_MAX} characters`)
     .email('Please enter a valid email'),
-  password: z.string().max(PASSWORD_MAX, 'Password is too long'),
+  password: z.string().trim().max(PASSWORD_MAX, 'Password is too long'),
 })
 
 const initialValues: LoginForm = {
