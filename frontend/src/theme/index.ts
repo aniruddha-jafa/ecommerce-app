@@ -6,16 +6,23 @@ const theme = extendTheme({
   fonts: {
     'Catamaran-light': 'Catamaran, sans-serif',
   },
+  colors: {
+    common: {
+      white: 'white',
+    },
+    text: {
+      primaryContrast: 'white',
+    },
+  },
   semanticTokens: {
     colors: {
-      common: {
-        white: 'white',
-      },
       primary: {
         default: 'pink.500',
+        _dark: '',
       },
       secondary: {
         default: 'cyan.400',
+        _dark: '',
       },
     },
   },
