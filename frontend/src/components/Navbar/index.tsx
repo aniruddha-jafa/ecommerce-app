@@ -13,7 +13,6 @@ import {
   PopoverTrigger,
   PopoverContent,
   PopoverBody,
-  Show,
   useBreakpointValue,
   useDisclosure,
   VStack,
@@ -39,13 +38,14 @@ const NavLink = ({ name, href, isMobile = false }: NavLinkProps) => {
     <>
       {isMobile ? (
         <>
-          <LinkBox w='100%' _hover={{ color: 'primary' }}>
+          <LinkBox
+            w='100%'
+            py='2'
+            borderBottom='solid 1px lightgrey'
+            _hover={{ color: 'primary' }}
+          >
             <NextLink href={href} passHref>
-              <LinkOverlay>
-                <Box borderBottom='solid 1px lightgrey' py='2'>
-                  <Link fontWeight='semibold'>{name} </Link>
-                </Box>
-              </LinkOverlay>
+              <LinkOverlay fontWeight='semibold'>{name}</LinkOverlay>
             </NextLink>
           </LinkBox>
         </>
@@ -53,7 +53,7 @@ const NavLink = ({ name, href, isMobile = false }: NavLinkProps) => {
         <>
           <NextLink href={href}>
             <Link fontWeight='semibold' _hover={{ color: 'primary' }}>
-              {name}{' '}
+              {name}
             </Link>
           </NextLink>
         </>
