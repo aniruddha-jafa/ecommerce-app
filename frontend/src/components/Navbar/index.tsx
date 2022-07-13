@@ -1,103 +1,182 @@
-import Link from 'next/link'
-import { Box, Button } from '@chakra-ui/react'
+import NextLink from 'next/link'
+import {
+  Box,
+  Button,
+  Collapse,
+  Flex,
+  Heading,
+  IconButton,
+  Link,
+  LinkBox,
+  LinkOverlay,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverBody,
+  Show,
+  useBreakpointValue,
+  useDisclosure,
+  VStack,
+  Text,
+} from '@chakra-ui/react'
 
-/**@todo - placeholder */
-export default function Main() {
+import { Icon } from '@iconify/react'
+
+import { SearchIcon, HamburgerIcon } from '@chakra-ui/icons'
+
+interface NavLinkProps {
+  name: string
+  href: string
+  isMobile: boolean
+}
+
+/**
+ * on mobile links should be fullwidth buttons, to help
+ * ease user navigation
+ */
+const NavLink = ({ name, href, isMobile = false }: NavLinkProps) => {
   return (
     <>
-      <Box
+      {isMobile ? (
+        <>
+          <LinkBox w='100%' _hover={{ color: 'primary' }}>
+            <NextLink href={href} passHref>
+              <LinkOverlay>
+                <Box borderBottom='solid 1px lightgrey' py='2'>
+                  <Link fontWeight='semibold'>{name} </Link>
+                </Box>
+              </LinkOverlay>
+            </NextLink>
+          </LinkBox>
+        </>
+      ) : (
+        <>
+          <NextLink href={href}>
+            <Link fontWeight='semibold' _hover={{ color: 'primary' }}>
+              {name}{' '}
+            </Link>
+          </NextLink>
+        </>
+      )}
+    </>
+  )
+}
+
+/**
+ * @todo extract cart summary info (price, num items etc) to seperate component
+ */
+const CartSummaryPopover = () => (
+  <Popover>
+    <PopoverTrigger>
+      <IconButton
+        aria-label='cart'
+        fontWeight='thin'
+        icon={<Icon icon='ic:outline-shopping-cart' />}
+        isRound
+      />
+    </PopoverTrigger>
+    <PopoverContent minW='16ch' maxW='max-content'>
+      <PopoverBody p='4'>
+        <Text fontWeight={'bold'}>8 items</Text>
+        <Text color='secondary'>Subtotal $99</Text>
+        <Button w='100%' colorScheme='blue' mt='6'>
+          View Cart
+        </Button>
+      </PopoverBody>
+    </PopoverContent>
+  </Popover>
+)
+
+interface NavBlockProps {
+  isOpen: boolean
+  onToggle: () => void
+}
+
+/**
+ * Links are collapsible on mobile, else a simple row on larger screens
+ *
+ * CartPopover & search button only visible on larger screens
+ */
+const NavLinksBlock = ({ isOpen, onToggle }: NavBlockProps) => {
+  const isMobile = useBreakpointValue({ base: true, md: false })
+
+  return (
+    <>
+      {isMobile ? (
+        <>
+          <IconButton
+            aria-label='menu'
+            size='lg'
+            variant='outline'
+            icon={<HamburgerIcon />}
+            onClick={onToggle}
+          />
+          <Box w='100%'>
+            <Collapse in={isOpen} animateOpacity>
+              <VStack w='100%'>
+                <NavLink href='#' name='Home' isMobile={true} />
+                <NavLink href='#' name='Shop' isMobile={true} />
+                <NavLink href='#' name='About' isMobile={true} />
+                <NavLink href='#' name='Faq' isMobile={true} />
+                <NavLink href='#' name='Contact' isMobile={true} />
+              </VStack>
+            </Collapse>
+          </Box>
+        </>
+      ) : (
+        <>
+          <Flex
+            flex='1 1'
+            gap={8}
+            justifyContent='center'
+            alignItems='center'
+            fontWeight={600}
+            // border='solid 1px blue'
+          >
+            <NavLink href='#' name='Home' isMobile={false} />
+            <NavLink href='#' name='Shop' isMobile={false} />
+            <NavLink href='#' name='About' isMobile={false} />
+            <NavLink href='#' name='Faq' isMobile={false} />
+            <NavLink href='#' name='Contact' isMobile={false} />
+          </Flex>
+          <Flex gap='4'>
+            <IconButton
+              aria-label='search'
+              fontWeight='thin'
+              icon={<SearchIcon fontWeight='hairline' />}
+              isRound
+            />
+            <CartSummaryPopover />
+          </Flex>
+        </>
+      )}
+    </>
+  )
+}
+
+/**
+ * control toggle of NavLinkBlock from parent
+ */
+export default function Main() {
+  const { isOpen, onToggle } = useDisclosure()
+  return (
+    <>
+      <Flex
         as='nav'
-        className='navbar'
-        color='primary.main'
-        border='solid 1px'
-        borderRadius='lg'
-        borderColor='primary.main'
-        px={8}
-        m={1}
+        py={6}
+        px={{ base: 12, md: 36 }}
+        flexWrap='wrap'
+        justifyContent='space-between'
+        fontFamily='Catamaran-light'
       >
-        <div className='flex-1'>
-          <a className='btn btn-ghost normal-case text-xl'>_Home_</a>
-        </div>
-        <div className='flex-none'>
-          <div className='dropdown dropdown-end'>
-            <label tabIndex={0} className='btn btn-ghost btn-circle'>
-              <div className='indicator'>
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  className='h-5 w-5'
-                  fill='none'
-                  viewBox='0 0 24 24'
-                  stroke='currentColor'
-                >
-                  <path
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                    strokeWidth='2'
-                    d='M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z'
-                  />
-                </svg>
-                <span className='badge badge-sm indicator-item'>8</span>
-              </div>
-            </label>
-            <div
-              tabIndex={0}
-              className='mt-3 card card-compact dropdown-content w-52 bg-base-100 shadow'
-            >
-              <div className='card-body'>
-                <span className='font-bold text-lg'>8 Items</span>
-                <span className='text-info'>Subtotal: $999</span>
-                <div className='card-actions'>
-                  <Button
-                    colorScheme='teal'
-                    border='none'
-                    className='btn btn-block'
-                  >
-                    View cart
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className='dropdown dropdown-end'>
-            <label tabIndex={0} className='btn btn-ghost btn-circle'>
-              <button>
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  fill='none'
-                  viewBox='0 0 24 24'
-                  className='inline-block w-5 h-5 stroke-current'
-                >
-                  <path
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                    strokeWidth='2'
-                    d='M4 6h16M4 12h16M4 18h16'
-                  ></path>
-                </svg>
-              </button>
-            </label>
-            <ul
-              tabIndex={0}
-              className='menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52'
-            >
-              <li>
-                <Link
-                  href='/user/0b8bb746-79cd-49c8-a8b3-10980de10bb2'
-                  className='justify-between'
-                >
-                  Profile
-                </Link>
-              </li>
-              <li>
-                <Link href='.'>Settings</Link>
-              </li>
-              <li>
-                <Link href='.'>Logout</Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </Box>
+        <Heading textTransform='uppercase'>
+          Adrian
+          <Box display={'inline'} color='primary'>
+            .
+          </Box>
+        </Heading>
+        <NavLinksBlock isOpen={isOpen} onToggle={onToggle} />
+      </Flex>
     </>
   )
 }
