@@ -1,4 +1,5 @@
 import BaseLayout from 'layouts/BaseLayout'
+import { Box } from '@chakra-ui/react'
 
 import type { NextPage } from 'next'
 
@@ -12,7 +13,7 @@ const Home: NextPage = () => {
   return (
     <>
       <BaseLayout>
-        <p>Home...</p>
+        <Box bgColor='orange.100' height='100%'></Box>
       </BaseLayout>
     </>
   )
