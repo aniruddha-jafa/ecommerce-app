@@ -8,7 +8,12 @@ export default function Document() {
         <link rel='preconnect' href='https://fonts.gstatic.com' />
         {/* Catamarran light */}
         <link
-          href='https://fonts.googleapis.com/css2?family=Catamaran:wght@300&display=swap'
+          href='https://fonts.googleapis.com/css2?family=Catamaran:wght@300;400;600&display=swap'
+          rel='stylesheet'
+        />
+        {/* Source sans pro */}
+        <link
+          href='https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap'
           rel='stylesheet'
         />
         {/* Poppins */}

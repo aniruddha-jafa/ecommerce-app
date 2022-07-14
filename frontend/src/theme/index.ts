@@ -4,7 +4,8 @@ import { extendTheme } from '@chakra-ui/react'
 const theme = extendTheme({
   global: {},
   fonts: {
-    'Catamaran-light': 'Catamaran, sans-serif',
+    'Catamaran light': 'Catamaran, sans-serif',
+    'Source Sans Pro': 'Source Sans Pro, sans-serif',
   },
   colors: {
     common: {

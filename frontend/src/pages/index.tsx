@@ -1,6 +1,11 @@
-import BaseLayout from 'layouts/BaseLayout'
+// -- components
 import { Box } from '@chakra-ui/react'
 
+// custom
+import BaseLayout from 'layouts/BaseLayout'
+import ProductGrid from 'components/ProductGrid/index'
+
+// -- types
 import type { NextPage } from 'next'
 
 // ----------------------------------------------------------------
@@ -13,7 +18,9 @@ const Home: NextPage = () => {
   return (
     <>
       <BaseLayout>
-        <Box bgColor='orange.100' height='100%'></Box>
+        <Box bgColor='orange.50' height='100%'>
+          <ProductGrid />
+        </Box>
       </BaseLayout>
     </>
   )

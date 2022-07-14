@@ -167,7 +167,7 @@ export default function Main() {
         px={{ base: 12, md: 36 }}
         flexWrap='wrap'
         justifyContent='space-between'
-        fontFamily='Catamaran-light'
+        fontFamily='Catamaran light'
       >
         <Heading textTransform='uppercase'>
           Adrian
