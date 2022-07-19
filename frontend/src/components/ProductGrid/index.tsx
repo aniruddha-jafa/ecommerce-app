@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 
 // components
 import { Box, Container, Skeleton, SimpleGrid } from '@chakra-ui/react'
-import ProductGridItem from 'components/ProductGridItem'
+import ProductGridItem from './ProductGridItem'
 import { SORT_BY, sortOpts, SortMenu } from './SortMenu'
 
 // data
