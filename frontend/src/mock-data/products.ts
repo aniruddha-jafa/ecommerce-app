@@ -239,4 +239,6 @@ const products = [
   },
 ]
 
+export type ProductItem = typeof products[0]
+
 export default products

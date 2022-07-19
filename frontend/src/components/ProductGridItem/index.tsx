@@ -1,20 +1,12 @@
 import { LinkBox, LinkOverlay, Text, VStack } from '@chakra-ui/react'
 import Image from 'next/image'
-
-// ----------------------------------------------------------------
-
-interface props {
-  name: string
-  price: string
-  imagePath: string
-  id: string
-}
+import { ProductGridItem } from 'types/product'
 
 /**
  * @todo
  * - [ ] show cart icon on hover
  */
-function Main({ name, price, imagePath, id }: props) {
+function Main({ name, currentPrice, imagePath, id }: ProductGridItem) {
   const link = `/product/${id}`
   return (
     <VStack>
@@ -39,7 +31,7 @@ function Main({ name, price, imagePath, id }: props) {
         color='gray.500'
       >
         {/* <LinkOverlay href={link}> */}
-        {price}
+        {currentPrice}
         {/* </LinkOverlay> */}
       </Text>
     </VStack>
