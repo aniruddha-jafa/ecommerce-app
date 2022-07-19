@@ -56,4 +56,5 @@ const SortMenu = ({ setSort }: sortMenuProps) => {
   )
 }
 
-export { SORT_BY, sortOpts, SortMenu }
+export type { sortOpts }
+export { SORT_BY, SortMenu }
