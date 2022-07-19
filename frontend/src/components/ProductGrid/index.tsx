@@ -1,11 +1,20 @@
-// -- components
+// components
 import { Container, SimpleGrid } from '@chakra-ui/react'
-
-// -- data
-import products from 'mock-data/products'
 import ProductGridItem from 'components/ProductGridItem'
 
+// data
+import { useGetProducts } from 'hooks'
+// ----------------------------------------------------------------
+
 function Main() {
+  const { products = [], error } = useGetProducts()
+
+  if (error) {
+    console.error(error)
+    console.error(error.stack)
+    return <p>Error, check console </p>
+  }
+
   return (
     <>
       <Container minW='100%' px={{ base: 2, md: 64 }}>
@@ -18,15 +27,16 @@ function Main() {
           placeItems='center'
           // border='solid 1px blue'
         >
-          {products.map(({ name, currentPrice, imagePath, id }) => (
-            <ProductGridItem
-              key={id}
-              name={name}
-              price={currentPrice}
-              imagePath={imagePath}
-              id={id}
-            />
-          ))}
+          {products &&
+            products.map(({ name, currentPrice, imagePath, id }) => (
+              <ProductGridItem
+                key={id}
+                name={name}
+                currentPrice={currentPrice}
+                imagePath={imagePath}
+                id={id}
+              />
+            ))}
         </SimpleGrid>
       </Container>
     </>
