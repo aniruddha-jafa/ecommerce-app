@@ -1,59 +1,9 @@
 // -- components
-import {
-  Container,
-  LinkBox,
-  LinkOverlay,
-  SimpleGrid,
-  Text,
-  VStack,
-} from '@chakra-ui/react'
-import Image from 'next/image'
+import { Container, SimpleGrid } from '@chakra-ui/react'
 
 // -- data
 import products from 'mock-data/products'
-
-// ----------------------------------------------------------------
-
-interface ProductItemProps {
-  name: string
-  price: string
-  imagePath: string
-  id: string
-}
-
-/**
- * @todo
- * - [ ] show cart icon on hover
- */
-const ProductItem = ({ name, price, imagePath, id }: ProductItemProps) => {
-  const link = `/product/${id}`
-  return (
-    <VStack>
-      <LinkBox>
-        <LinkOverlay href={link}>
-          <Image src={imagePath} alt={name} width={300} height={320} />
-        </LinkOverlay>
-      </LinkBox>
-      <Text
-        fontSize={'lg'}
-        fontFamily='Catamaran light'
-        textAlign='center'
-        fontWeight={600}
-        noOfLines={1}
-      >
-        {name}
-      </Text>
-      <Text
-        fontSize={'sm'}
-        fontFamily='Source Sans Pro'
-        textAlign='center'
-        color='gray.500'
-      >
-        <LinkOverlay href={link}>{price}</LinkOverlay>
-      </Text>
-    </VStack>
-  )
-}
+import ProductGridItem from 'components/ProductGridItem'
 
 function Main() {
   return (
@@ -69,7 +19,7 @@ function Main() {
           // border='solid 1px blue'
         >
           {products.map(({ name, currentPrice, imagePath, id }) => (
-            <ProductItem
+            <ProductGridItem
               key={id}
               name={name}
               price={currentPrice}
