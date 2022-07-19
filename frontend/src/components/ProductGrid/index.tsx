@@ -18,7 +18,7 @@ import ProductGridItem from 'components/ProductGridItem'
 import { ChevronDownIcon } from '@chakra-ui/icons'
 
 // data
-import { useGetProducts } from 'hooks'
+import { useGetProducts } from 'hooks/product'
 
 import type { ProductGridItem as ProductGridItemType } from 'types/product'
 import type { Dispatch, SetStateAction } from 'react'
