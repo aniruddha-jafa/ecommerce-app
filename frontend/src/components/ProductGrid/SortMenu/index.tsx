@@ -18,13 +18,13 @@ import type { Dispatch, SetStateAction } from 'react'
 
 // ---------------------------------------------------------------
 
-type sortOpts = 'name' | 'price' | 'review' | 'none'
+type sortOpts = 'name' | 'price' | 'rating' | 'none'
 
 const SORT_BY = {
   none: (arr: ProductGridItemType[]) => arr,
   name: (arr: ProductGridItemType[]) => sortBy(arr, 'name'),
   price: (arr: ProductGridItemType[]) => sortBy(arr, 'currentPrice'),
-  review: (arr: ProductGridItemType[]) => sortBy(arr, 'reviews'),
+  rating: (arr: ProductGridItemType[]) => sortBy(arr, 'rating').reverse(),
 }
 
 type sortMenuProps = {
@@ -46,8 +46,8 @@ const SortMenu = ({ setSort }: sortMenuProps) => {
             <MenuItemOption value='PRICE' onClick={() => setSort('price')}>
               Price: Low to High
             </MenuItemOption>
-            <MenuItemOption value='REVIEW' onClick={() => setSort('review')}>
-              Avg. review
+            <MenuItemOption value='REVIEW' onClick={() => setSort('rating')}>
+              Avg. rating
             </MenuItemOption>
           </MenuOptionGroup>
         </MenuList>

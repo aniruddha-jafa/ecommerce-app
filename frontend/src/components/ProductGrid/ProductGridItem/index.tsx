@@ -1,4 +1,4 @@
-import { LinkBox, LinkOverlay, Text, VStack } from '@chakra-ui/react'
+import { Badge, LinkBox, LinkOverlay, Text, VStack } from '@chakra-ui/react'
 import Image from 'next/image'
 import { ProductGridItem } from 'types/product'
 
@@ -22,13 +22,23 @@ function Main({
   currentPrice,
   currency,
   imagePath,
+  rating,
   id,
 }: ProductGridItem) {
   const link = `/product/${id}`
   const currencySymbol = getCurrencySymbol(currency)
   return (
     <VStack>
-      <LinkBox>
+      <LinkBox position='relative'>
+        <Badge
+          variant='subtle'
+          position='absolute'
+          zIndex='overlay'
+          bottom='15px'
+          right='10px'
+        >
+          {rating.toFixed(1)}
+        </Badge>
         <LinkOverlay href={link}>
           <Image src={imagePath} alt={name} width={300} height={320} />
         </LinkOverlay>
