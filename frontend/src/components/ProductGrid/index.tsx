@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 
 // components
-import { Container, SimpleGrid } from '@chakra-ui/react'
+import { Box, Container, Skeleton, SimpleGrid } from '@chakra-ui/react'
 import ProductGridItem from 'components/ProductGridItem'
 import { SORT_BY, sortOpts, SortMenu } from './SortMenu'
 
@@ -11,7 +11,7 @@ import { useGetProducts } from 'hooks/product'
 // ----------------------------------------------------------------
 
 function Main() {
-  const { products = [], error } = useGetProducts()
+  const { products = [], loading = true, error } = useGetProducts()
 
   const [sort, setSort] = useState<sortOpts>('none')
   const [sortedProducts, setSortedProducts] = useState(products)
@@ -41,7 +41,9 @@ function Main() {
           placeItems='center'
           // border='solid 1px blue'
         >
-          {sortedProducts &&
+          {loading ? (
+            <Loading />
+          ) : (
             sortedProducts.map(
               ({ name, currentPrice, currency, rating, imagePath, id }) => (
                 <ProductGridItem
@@ -54,11 +56,27 @@ function Main() {
                   id={id}
                 />
               )
-            )}
+            )
+          )}
         </SimpleGrid>
       </Container>
     </>
   )
 }
+
+const LoadingItem = () => (
+  <Skeleton isLoaded={false}>
+    <Box h={250} w={250} />
+  </Skeleton>
+)
+
+/** Loading skeleton for ProductGrid */
+const Loading = () => (
+  <>
+    <LoadingItem />
+    <LoadingItem />
+    <LoadingItem />
+  </>
+)
 
 export default Main
