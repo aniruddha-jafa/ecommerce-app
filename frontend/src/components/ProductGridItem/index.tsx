@@ -2,12 +2,30 @@ import { LinkBox, LinkOverlay, Text, VStack } from '@chakra-ui/react'
 import Image from 'next/image'
 import { ProductGridItem } from 'types/product'
 
+const getCurrencySymbol = (currency: string): string => {
+  switch (currency) {
+    case 'INR':
+      return '₹'
+    case 'USD':
+      return '$'
+    default:
+      return ''
+  }
+}
+
 /**
  * @todo
  * - [ ] show cart icon on hover
  */
-function Main({ name, currentPrice, imagePath, id }: ProductGridItem) {
+function Main({
+  name,
+  currentPrice,
+  currency,
+  imagePath,
+  id,
+}: ProductGridItem) {
   const link = `/product/${id}`
+  const currencySymbol = getCurrencySymbol(currency)
   return (
     <VStack>
       <LinkBox>
@@ -31,7 +49,7 @@ function Main({ name, currentPrice, imagePath, id }: ProductGridItem) {
         color='gray.500'
       >
         {/* <LinkOverlay href={link}> */}
-        {currentPrice}
+        {currencySymbol + currentPrice}
         {/* </LinkOverlay> */}
       </Text>
     </VStack>
